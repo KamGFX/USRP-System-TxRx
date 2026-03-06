@@ -39,13 +39,13 @@ Los resultados obtenidos muestran que la transformada wavelet de Haar permite re
 ## Sistema implementado
 
 <p align="center">
-  <img src="images/implementacion_comprension_1" width="700">
+  <img src="Docs/images/implementacion_comprension_1.jpeg" width="700">
 </p>
 
 Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simulink.
 
 <p align="center">
-  <img src="images/implementacion_comprension_2" width="700">
+  <img src="Docs/images/implementacion_comprension_2.jpeg" width="700">
 </p>
 
 Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simulink.
