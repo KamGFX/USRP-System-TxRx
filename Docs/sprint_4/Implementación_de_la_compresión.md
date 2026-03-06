@@ -48,7 +48,7 @@ Los resultados obtenidos muestran que la transformada wavelet de Haar permite re
 </p>
 
 <p align="center">
-  <img src="Docs/images/comparacion_comprension.jpeg" width="300">
+  <img src="..images/comparacion_comprension.jpeg" width="300">
 </p>
 
 ## Referencias
