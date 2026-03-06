@@ -1,0 +1,21 @@
+function img_out = fcn(img)
+%#codegen
+% Procesamiento básico de imagen RGB en Simulink
+
+% Asegurar tipo double para procesamiento
+img_d = double(img);
+
+% Verificar que sea imagen RGB
+if size(img_d,3) ~= 3
+    error('La imagen no es RGB');
+end
+
+% Conversión a escala de grises (luminancia)
+img_gray = 0.2989 * img_d(:,:,1) + ...
+           0.5870 * img_d(:,:,2) + ...
+           0.1140 * img_d(:,:,3);
+
+% Volver a uint8 para visualización
+img_out = uint8(img_gray);
+
+end
