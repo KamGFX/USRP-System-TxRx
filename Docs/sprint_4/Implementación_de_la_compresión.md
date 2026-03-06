@@ -60,7 +60,7 @@ Otra forma de interpretarlo es mediante la cantidad de información eliminada du
 
 El porcentaje de coeficientes eliminados es aproximadamente:
 
-(1.443.390/1.926.400) x 100 = 74.3%
+(1,443,390/1,926,400) x 100 = 74.3%
 
 Por lo tanto, **aproximadamente el 74 % de los coeficientes fueron eliminados**, lo cual indica una reducción significativa de datos mientras se conserva la información principal de la imagen.
 
