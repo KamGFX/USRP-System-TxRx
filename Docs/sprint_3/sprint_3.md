@@ -45,3 +45,9 @@ Dentro del bloque MATLAB Function, la imagen recibida se convierte inicialmente 
 Una vez verificada la estructura de la imagen, se realiza la conversión a escala de grises utilizando el modelo de luminancia perceptual. Este modelo pondera cada uno de los canales de color de acuerdo con la sensibilidad del ojo humano a diferentes longitudes de onda. En particular, el canal verde tiene mayor contribución a la percepción de brillo, seguido por el canal rojo y finalmente por el canal azul. La intensidad de cada píxel en escala de grises se obtiene mediante una combinación lineal de los tres canales utilizando coeficientes específicos que representan esta ponderación.
 
 Finalmente, la imagen resultante se convierte nuevamente al tipo de dato `uint8`, permitiendo que pueda ser visualizada correctamente dentro del entorno de Simulink o exportada nuevamente a MATLAB para su análisis. El resultado final es una imagen de un solo canal que conserva las dimensiones espaciales de la imagen original, pero representa únicamente la información de luminancia, lo que permite simplificar su análisis o procesamiento posterior.
+
+## Referencias
+
+- [Importing Images into MATLAB Workspace – MathWorks](https://la.mathworks.com/help/matlab/import_export/importing-images.html)
+
+- [Read Image Data into Workspace – MathWorks](https://es.mathworks.com/help/images/read-image-data-into-the-workspace.html)
