@@ -42,15 +42,11 @@ Los resultados obtenidos muestran que la transformada wavelet de Haar permite re
 
 La relación de compresión se calcula como:
 
-\[
-CR = \frac{\text{coeficientes totales}}{\text{coeficientes no cero}}
-\]
+CR = coeficientes totales / coeficientes no cero
 
-Para el caso analizado:
+Para este caso:
 
-\[
-CR = \frac{1926400}{493010} \approx 3.91
-\]
+CR = 1,926,400 / 493,010 ≈ 3.91
 
 Esto significa que la imagen original contiene **1,926,400 coeficientes**, mientras que después del proceso de compresión únicamente **493,010 coeficientes permanecen diferentes de cero**.
 
