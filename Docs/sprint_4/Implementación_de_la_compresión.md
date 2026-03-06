@@ -49,3 +49,11 @@ Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simuli
 </p>
 
 Figura 2. Modelo del sistema de transmisión de imágenes implementado en Simulink.
+
+## Referencias
+
+- [MathWorks. How to Implement Haar Wavelet from Scratch – MATLAB Central](https://la.mathworks.com/matlabcentral/answers/1698910-how-to-implement-haar-wavelet-from-scratch)
+
+- [MathWorks. haart2 – 2-D Haar Wavelet Transform](https://la.mathworks.com/help/wavelet/ref/haart2.html)
+
+- [Roy Tutorials. Haar Wavelet Transform](https://roytuts.com/haar-wavelet-transform/)
