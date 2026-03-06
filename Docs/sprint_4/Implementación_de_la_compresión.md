@@ -36,6 +36,112 @@ A partir de estos valores se calcula una **relación de compresión**, que indic
 
 Los resultados obtenidos muestran que la transformada wavelet de Haar permite reducir de manera considerable el número de coeficientes necesarios para representar la imagen, manteniendo al mismo tiempo una representación visual reconocible. Esto confirma que el método resulta adecuado para aplicaciones de transmisión digital de imágenes, donde es importante reducir el volumen de datos sin comprometer la interpretabilidad de la información transmitida.
 
+## Análisis del ratio de compresión obtenido
+
+### 1. Significado del ratio de compresión (3.91)
+
+La relación de compresión se calcula como:
+
+\[
+CR = \frac{\text{coeficientes totales}}{\text{coeficientes no cero}}
+\]
+
+Para el caso analizado:
+
+\[
+CR = \frac{1926400}{493010} \approx 3.91
+\]
+
+Esto significa que la imagen original contiene **1,926,400 coeficientes**, mientras que después del proceso de compresión únicamente **493,010 coeficientes permanecen diferentes de cero**.
+
+Otra forma de interpretarlo es mediante la cantidad de información eliminada durante la compresión:
+
+| Tipo | Cantidad |
+|-----|-----|
+| Coeficientes totales | 1,926,400 |
+| Coeficientes eliminados | 1,433,390 |
+| Coeficientes conservados | 493,010 |
+
+El porcentaje de coeficientes eliminados es aproximadamente:
+
+\[
+\frac{1,433,390}{1,926,400} \times 100 \approx 74.3\%
+\]
+
+Por lo tanto, **aproximadamente el 74 % de los coeficientes fueron eliminados**, lo cual indica una reducción significativa de datos mientras se conserva la información principal de la imagen.
+
+---
+
+## Interpretación visual de la compresión
+
+En la Transformada Wavelet de Haar, la imagen se descompone en cuatro subbandas principales:
+
+- **LL**: contiene la mayor parte de la información de la imagen.
+- **LH**: representa los bordes horizontales.
+- **HL**: representa los bordes verticales.
+- **HH**: contiene detalles finos y ruido de alta frecuencia.
+
+Durante el proceso de compresión se aplica un **umbral (threshold)** sobre los coeficientes de las subbandas de detalle. Cuando se aplica este umbral:
+
+- muchos coeficientes en **LH, HL y HH** se vuelven cero
+- solo se mantienen los coeficientes más significativos
+
+Esto reduce la cantidad de información necesaria para representar la imagen sin afectar de manera significativa su apariencia visual.
+
+---
+
+## Ajuste del nivel de compresión
+
+El nivel de compresión depende del **valor del umbral utilizado en el proceso de eliminación de coeficientes**.
+
+Un umbral mayor produce una mayor compresión, aunque también puede generar mayor pérdida de calidad visual.
+
+Ejemplo de valores típicos:
+
+| Umbral | Compresión | Calidad |
+|------|------|------|
+| 15 | 3.9 : 1 | casi sin pérdida |
+| 25 | 6 : 1 | leve pérdida |
+| 40 | 10 : 1 | pérdida visible |
+| 60 | 15 : 1 | fuerte pérdida |
+
+Esto permite ajustar el sistema dependiendo del equilibrio deseado entre **calidad de imagen y reducción de tamaño de datos**.
+
+---
+
+## Interpretación del resultado para el laboratorio
+
+En este proyecto se aplicó la **Transformada Wavelet Haar** a la imagen procesada. Posteriormente se aplicó un umbral sobre los coeficientes de detalle (LH, HL y HH), eliminando aquellos de magnitud pequeña.
+
+El sistema obtuvo un **ratio de compresión de 3.91:1**, eliminando aproximadamente el **74 % de los coeficientes**, mientras se mantiene la información principal de la imagen en la subbanda LL.
+
+Este resultado demuestra que la implementación de la transformada Haar junto con el proceso de umbralización permite reducir significativamente la cantidad de datos necesarios para representar la imagen.
+
+---
+
+## Consideraciones importantes
+
+La imagen original utilizada es una imagen **RGB**, lo que implica que la compresión se aplica sobre **tres canales de color**.
+
+El número total de coeficientes proviene de:
+  alto × ancho × canales
+
+
+Por esta razón, el total de coeficientes calculado corresponde a la cantidad total de píxeles considerando los tres canales de la imagen.
+
+---
+
+## Conclusión
+
+La implementación de la **Transformada Wavelet de Haar combinada con un proceso de thresholding** permite realizar compresión con pérdidas de manera eficiente.
+
+El ratio de compresión obtenido (**3.9:1**) es adecuado para una primera etapa de compresión basada en wavelets, ya que permite eliminar una gran cantidad de información redundante manteniendo la estructura visual principal de la imagen.
+
+
+<p align="center">
+  <img src="../images/comparacion_comprension.jpeg" width="300">
+</p>
+
 ## Sistema implementado
 
 <p align="center">
@@ -47,9 +153,7 @@ Los resultados obtenidos muestran que la transformada wavelet de Haar permite re
   <img src="../images/implementacion_comprension_2.jpeg" width="300">
 </p>
 
-<p align="center">
-  <img src="../images/comparacion_comprension.jpeg" width="300">
-</p>
+
 
 ## Referencias
 
