@@ -35,3 +35,17 @@ Los coeficientes que se convierten en cero representan información que ha sido 
 A partir de estos valores se calcula una **relación de compresión**, que indica cuántos datos originales pueden representarse utilizando un número menor de coeficientes significativos. Este indicador permite evaluar cuantitativamente la eficiencia del algoritmo.
 
 Los resultados obtenidos muestran que la transformada wavelet de Haar permite reducir de manera considerable el número de coeficientes necesarios para representar la imagen, manteniendo al mismo tiempo una representación visual reconocible. Esto confirma que el método resulta adecuado para aplicaciones de transmisión digital de imágenes, donde es importante reducir el volumen de datos sin comprometer la interpretabilidad de la información transmitida.
+
+## Sistema implementado
+
+<p align="center">
+  <img src="images/implementacion_comprension_1" width="700">
+</p>
+
+Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simulink.
+
+<p align="center">
+  <img src="images/implementacion_comprension_2" width="700">
+</p>
+
+Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simulink.
