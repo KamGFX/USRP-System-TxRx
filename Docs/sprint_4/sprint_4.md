@@ -107,3 +107,9 @@ La transformada wavelet de Haar representa una técnica eficiente y sencilla par
 Gracias a su baja complejidad computacional y a su facilidad de implementación en entornos como MATLAB y Simulink, este método resulta adecuado para el desarrollo de sistemas de transmisión digital de imágenes en entornos académicos y experimentales.
 
 Por estas razones, la **Transformada Wavelet de Haar** fue seleccionada como método de compresión para el sistema implementado en este proyecto.
+
+## Referencias
+
+- [Transformada Wavelet de Haar - Trabajo de grado, Universidad Politécnica de Madrid](https://oa.upm.es/56155/1/TFG_AILIN_MENENDEZ_MARTINEZ.pdf)
+
+- [Compresión de imágenes utilizando transformadas wavelet - Universidad de los Llanos](https://repositorio.unillanos.edu.co/server/api/core/bitstreams/1ef45fb2-b767-49c6-b702-f06197cedb00/content)
