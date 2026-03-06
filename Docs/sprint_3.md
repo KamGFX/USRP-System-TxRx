@@ -46,6 +46,18 @@ Una vez verificada la estructura de la imagen, se realiza la conversión a escal
 
 Finalmente, la imagen resultante se convierte nuevamente al tipo de dato `uint8`, permitiendo que pueda ser visualizada correctamente dentro del entorno de Simulink o exportada nuevamente a MATLAB para su análisis. El resultado final es una imagen de un solo canal que conserva las dimensiones espaciales de la imagen original, pero representa únicamente la información de luminancia, lo que permite simplificar su análisis o procesamiento posterior.
 
+<p align="center">
+  <img src="../images/implementacion_comprension_1.jpeg" width="700">
+</p>
+
+Figura 1. Modelo del sistema de transmisión de imágenes implementado en Simulink.
+
+<p align="center">
+  <img src="../images/escalagris.jpeg" width="700">
+</p>
+
+Figura 2. Modelo del sistema de transmisión de imágenes implementado en Simulink.
+
 ## Referencias
 
 - [Importing Images into MATLAB Workspace – MathWorks](https://la.mathworks.com/help/matlab/import_export/importing-images.html)
