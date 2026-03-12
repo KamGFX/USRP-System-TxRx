@@ -10,7 +10,7 @@ Una imagen RGB tiene tres canales (R, G y B), lo que implica transmitir tres mat
 
 ---
 
-## Serialización de la Imagen
+## Serialización de la imagen
 
 La serialización consiste en transformar la matriz de la imagen en un vector unidimensional, permitiendo que los datos puedan transmitirse de forma secuencial dentro del sistema de comunicaciones.
 
@@ -38,7 +38,7 @@ De esta forma, cada píxel de la imagen se transmite de manera secuencial dentro
 
 ---
 
-## Validación de la Estructura del Flujo de Datos
+## Validación de la estructura del flujo de datos
 
 Para verificar que la serialización se realiza correctamente, se implementó un bloque adicional de validación.
 
