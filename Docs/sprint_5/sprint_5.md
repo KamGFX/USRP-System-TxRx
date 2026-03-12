@@ -4,7 +4,7 @@
 
 En esta etapa del proyecto se implementó la **serialización de la imagen** y la **validación del flujo de datos** dentro del modelo desarrollado en Simulink.
 
-El requerimiento inicial establece la necesidad de **implementar la serialización de una matriz RGB**. Sin embargo, en etapas previas del sistema la imagen fue **convertida a escala de grises** con el objetivo de simplificar el procesamiento y reducir la cantidad de datos a transmitir.
+El requerimiento inicial establece la necesidad de **implementar la serialización de una matriz RGB**. Sin embargo, en etapas previas del sistema la imagen fue convertida a escala de grises*con el objetivo de simplificar el procesamiento y reducir la cantidad de datos a transmitir.
 
 Una imagen RGB tiene tres canales (R, G y B), lo que implica transmitir tres matrices de datos. Al convertir la imagen a escala de grises, el sistema trabaja únicamente con **una matriz bidimensional**, reduciendo el volumen de información y simplificando las operaciones posteriores del sistema de comunicación.
 
