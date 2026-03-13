@@ -1,0 +1,68 @@
+%% 1. Cargar imagen
+img = imread('Mi_valen.jpeg');
+
+%% 2. Procesamiento de imagen a color
+img_d = double(img);
+
+% Saturación
+img_d(img_d > 255) = 255;
+
+img_proc = uint8(img_d);
+
+%% 3. Empaquetar para From Workspace (Simulink)
+img_ws.time = 0;
+img_ws.signals.values = img_proc;
+img_ws.signals.dimensions = size(img_proc);
+
+%% 4. Visualización imagen original procesada
+figure
+imshow(img_proc)
+title('Imagen procesada enviada a Simulink')
+
+%% 5. Extraer salida de Simulink
+img_sim = out.img_out_ws.Data;
+
+
+% --- CORRECCIÓN: img_sim puede tener múltiples frames (3D o 4D) ---
+dims = size(img_sim);
+disp(['Dimensiones de img_sim: ' mat2str(dims)]);
+
+if ndims(img_sim) == 3 && dims(3) == 3
+    
+    img_final = img_sim;
+
+elseif ndims(img_sim) == 3 && dims(3) > 3
+    
+    img_final = img_sim(:, :, end-2:end);
+    disp('Múltiples frames detectados: se extrae el último frame RGB')
+
+elseif ndims(img_sim) == 4
+    
+    img_final = img_sim(:, :, :, end);
+    disp('Formato 4D detectado: se extrae el último frame')
+
+end
+
+%% 6. NORMALIZAR IMAGEN PARA VISUALIZACIÓN
+img_final = double(img_final);
+
+img_final = img_final - min(img_final(:));
+img_final = img_final / max(img_final(:));
+
+%% 7. Mostrar imagen resultante de Simulink
+figure
+imshow(img_final)
+title('Imagen de salida desde Simulink')
+
+%% 8. Guardar imagen
+imwrite(img_final, 'img_salida_simulink.png')
+disp('Imagen guardada como img_salida_simulink.png')
+
+img_final = out.img_out_ws.Data(:,:,end);
+
+total = numel(img_final);
+nozero = nnz(img_final);
+
+fprintf('Coeficientes totales: %d\n',total);
+fprintf('Coeficientes distintos de cero: %d\n',nozero);
+fprintf('Ratio compresión: %.2f\n', total/nozero);
