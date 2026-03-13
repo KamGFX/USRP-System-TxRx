@@ -151,5 +151,5 @@ De esta manera, al combinar las tres componentes en una sola representación, se
 La imagen resultante después de realizar esta combinación es la siguiente:
 
 <p align="center">
-  <img src="../images/Valentina_colorfinal.png" width="350">
+  <img src="../images/Valentina_colorfinal.jpeg" width="350">
 </p>
