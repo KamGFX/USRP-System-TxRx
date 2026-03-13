@@ -44,6 +44,9 @@ Finalmente, se realiza una verificación de la información cargada, mostrando:
 
 Esto permite confirmar que la imagen fue cargada correctamente antes de ejecutar la simulación.
 
+<p align="center">
+<img src="../../images/Valentina_color.jpeg" width="300">
+</p>
 
 ---
 
