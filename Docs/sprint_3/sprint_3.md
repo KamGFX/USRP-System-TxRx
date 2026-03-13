@@ -45,7 +45,7 @@ Finalmente, se realiza una verificación de la información cargada, mostrando:
 Esto permite confirmar que la imagen fue cargada correctamente antes de ejecutar la simulación.
 
 <p align="center">
-<img src="../../images/Valentina_color.jpeg" width="300">
+  <img src="../images/Valentina_color.png" width="300">
 </p>
 
 ---
@@ -118,3 +118,38 @@ Una vez calculadas las componentes Y, Cb y Cr:
 
 Esto permite que las señales puedan seguir siendo procesadas eficientemente dentro del modelo de Simulink o ser visualizadas posteriormente en MATLAB.
 
+<p align="center">
+  <img src="../images/Valentina_gris1.png" width="250">
+  <img src="../images/Valentina_gris2.png" width="250">
+  <img src="../images/Valentina_gris3.png" width="250">
+</p>
+
+---
+
+---
+
+# Reconstrucción de la imagen en un solo canal
+
+Después de obtener las tres matrices correspondientes a las componentes **Y**, **Cb** y **Cr**, se decidió unir nuevamente estas tres matrices en un solo canal de imagen. Esta decisión se tomó con el objetivo de **facilitar la visualización y el manejo de la información dentro del sistema de procesamiento**.
+
+Cuando las componentes YCbCr se mantienen separadas, cada una representa únicamente una parte de la información de la imagen:
+
+* **Y (Luminancia)** contiene la información de brillo y estructura de la imagen.
+* **Cb** representa la diferencia del componente azul respecto a la luminancia.
+* **Cr** representa la diferencia del componente rojo respecto a la luminancia.
+
+Si estas matrices se observaran individualmente, cada una mostraría solo una fracción de la información visual completa. Por esta razón, para poder visualizar correctamente la imagen y trabajar de forma más sencilla con ella dentro del sistema, se combinan nuevamente las tres matrices para formar una única representación de imagen.
+
+Este proceso permite:
+
+* **Recuperar la información completa de color de la imagen.**
+* **Facilitar la visualización del resultado final.**
+* **Simplificar el manejo de los datos dentro del flujo de procesamiento del sistema.**
+
+De esta manera, al combinar las tres componentes en una sola representación, se obtiene nuevamente una imagen completa que contiene tanto la información de luminancia como de crominancia.
+
+La imagen resultante después de realizar esta combinación es la siguiente:
+
+<p align="center">
+  <img src="../images/Valentina_colorfinal.png" width="350">
+</p>
