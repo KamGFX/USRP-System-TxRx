@@ -44,7 +44,7 @@ de los píxeles de la imagen original.
 
 ### Código del bloque de serialización
 
-![Código MATLAB - bloque_serializacion](images/Codigo_de_serializacion.jpeg)
+![Código MATLAB](../imagenes/Codigo_serialización.jpeg)
 
 El bloque de serialización está implementado como una función de MATLAB con la directiva
 `%#codegen`, lo que permite su uso dentro de Simulink y su posterior generación de código
