@@ -27,7 +27,7 @@ muestra a muestra al dispositivo mediante protocolos como:
 
 ### Diagrama del bloque de serialización
 
-![Diagrama](images/Serializacion_de_una_imagen.jpeg)
+![Diagrama](imagenes/Serializacion_de_una_imagen.jpeg)
 
 El diagrama muestra el flujo de datos dentro del entorno **Simulink**. La imagen de entrada
 `img_comp` ingresa con una dimensión de **[1600 x 1204 x 3]**, correspondiente a una imagen
