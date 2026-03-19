@@ -23,6 +23,54 @@ muestra a muestra al dispositivo mediante protocolos como:
 
 ---
 
+## Implementación en MATLAB/Simulink
+
+### Diagrama del bloque de serialización
+
+![Diagrama Simulink - Bloque de serialización](images/Serializacion_de_una_imagen.jpeg)
+
+El diagrama muestra el flujo de datos dentro del entorno **Simulink**. La imagen de entrada
+`img_comp` ingresa con una dimensión de **[1600 x 1204 x 3]**, correspondiente a una imagen
+en color (RGB) de 1600 píxeles de ancho, 1204 de alto y 3 canales de color.
+
+Este dato es procesado por el bloque **`bloque_serializacion`**, un *MATLAB Function Block*
+que transforma la matriz 3D en un vector unidimensional de dimensión **[5779200 x 1]**,
+resultado de multiplicar `1600 × 1204 × 3 = 5.779.200` muestras. A la derecha del diagrama
+se puede observar una vista previa del vector resultante `vector_tx`, cuyos primeros valores
+se encuentran en el rango de **150 – 154.5**, correspondientes a los niveles de intensidad
+de los píxeles de la imagen original.
+
+---
+
+### Código del bloque de serialización
+
+![Código MATLAB - bloque_serializacion](images/Codigo_de_serializacion.jpeg)
+
+El bloque de serialización está implementado como una función de MATLAB con la directiva
+`%#codegen`, lo que permite su uso dentro de Simulink y su posterior generación de código
+en C/C++ si fuera necesario.
+```matlab
+function vector_tx = bloque_serializacion(img_comp)
+%#codegen
+    vector_tx = img_comp(:);
+end
+```
+
+La lógica central del bloque se reduce a una sola instrucción: **`img_comp(:)`**, que en
+MATLAB aplana cualquier arreglo multidimensional en un vector columna, recorriendo los
+elementos en **orden column-major** (columna por columna, canal por canal). Esto garantiza
+que toda la información de la imagen quede contenida en una secuencia lineal y continua,
+lista para ser transmitida hacia la USRP.
+
+| Parámetro | Descripción |
+|---|---|
+| **Entrada** `img_comp` | Imagen comprimida en formato `double`, dimensión `H x W x 3` |
+| **Salida** `vector_tx` | Vector serializado en formato `double`, dimensión `(H*W*3) x 1` |
+| **Operación** | `img_comp(:)` — aplana la matriz 3D a un vector 1D |
+| **Directiva** | `%#codegen` — habilita la generación de código desde Simulink |
+
+---
+
 ## ¿Por qué se hace?
 
 | Razón | Descripción |
@@ -37,4 +85,7 @@ muestra a muestra al dispositivo mediante protocolos como:
 ## Conclusión
 
 > La serialización es el puente entre la representación lógica de la información (una imagen o
-> matriz) y la representación física requerida por el hardware de transmisión.
+> matriz) y la representación física requerida por el hardware de transmisión. En este caso,
+> la instrucción `img_comp(:)` de MATLAB condensa todo ese proceso en una sola línea,
+> convirtiendo una imagen RGB de más de 5 millones de píxeles en un flujo continuo listo
+> para ser emitido por la USRP.
