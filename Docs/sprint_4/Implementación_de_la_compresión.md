@@ -139,6 +139,10 @@ El ratio de compresión obtenido (**3.9:1**) es adecuado para una primera etapa 
 ## Sistema implementado
 
 <p align="center">
+  <img src="../images/haar.jpg" width="300">
+</p>
+
+<p align="center">
   <img src="../images/Valentina_colorfinal.jpeg" width="300">
 </p>
 
