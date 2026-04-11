@@ -1,75 +1,117 @@
-### *Bloque Modulador 16-QAM*
+## *Bloque de Modulación y Conformación de Pulso*
 
-El bloque modulador tiene como función convertir la secuencia de bits codificados en símbolos complejos correspondientes a una constelación **16-QAM**. Esta etapa permite la transición del dominio digital (bits) al dominio de señal (símbolos), siendo fundamental para la transmisión a través del canal.
+Después del procesamiento FEC, la secuencia binaria es convertida a símbolos complejos mediante modulación digital y posteriormente se aplica un filtrado de conformación de pulso. Esta etapa es fundamental para adaptar la señal a un medio físico de transmisión, optimizando el uso del espectro y reduciendo interferencias entre símbolos.
 
-En este sistema, la modulación se realiza agrupando los bits en bloques de 4, donde cada grupo se asigna a un símbolo complejo. Dado que `log2(16) = 4`, cada símbolo representa 4 bits, lo que incrementa la eficiencia espectral.
-
----
-
-### *1. Agrupación de bits*
-
-El modulador asegura que la longitud de la secuencia sea múltiplo de 4. En caso contrario, se agregan ceros al final de la secuencia para completar el último símbolo:
-
-    resto = mod(N_bits, 4);
-    if resto ~= 0
-        bits_cod = [bits_cod; zeros(4-resto,1)];
-    end
-
-Posteriormente, los bits se procesan en grupos de 4, donde cada grupo constituye un símbolo.
+El bloque está compuesto por dos etapas principales: modulación 16-QAM y filtrado Root Raised Cosine (RRC).
 
 ---
 
-### *2. Mapeo binario a símbolo (Gray Coding)*
+### *1. Modulador 16-QAM*
 
-Cada grupo de 4 bits se convierte a un valor decimal:
+El modulador implementa una modulación digital de tipo *Quadrature Amplitude Modulation (QAM)* de orden 16. En este esquema, cada símbolo representa 4 bits, lo que permite transmitir múltiples bits por símbolo, aumentando la eficiencia espectral.
 
-    decimal = b(1)*8 + b(2)*4 + b(3)*2 + b(4);
+#### *Agrupación de bits*
 
-Luego, se aplica un mapeo Gray mediante el vector:
+La secuencia de entrada se agrupa en bloques de 4 bits. En caso de que la longitud de la secuencia no sea múltiplo de 4, se realiza un relleno con ceros para completar el último grupo.
 
-    gray_map = [0 1 3 2 4 5 7 6 12 13 15 14 8 9 11 10];
+Cada grupo de 4 bits se convierte a un valor decimal, el cual se utiliza para indexar la constelación.
 
-El uso de codificación Gray permite que símbolos adyacentes en la constelación difieran en un solo bit, reduciendo la probabilidad de error en presencia de ruido.
+#### *Mapeo de símbolos*
 
----
+El sistema utiliza un mapeo tipo *Gray*, donde símbolos adyacentes difieren en un solo bit. Esto reduce la probabilidad de error en la demodulación.
 
-### *3. Asignación en la constelación I/Q*
+Las componentes en fase (I) y cuadratura (Q) se asignan mediante tablas predefinidas:
 
-Cada índice obtenido se asocia a un punto de la constelación mediante dos tablas que representan los ejes en fase (I) y cuadratura (Q):
+- Valores posibles: \(\{-3, -1, 1, 3\}\)
+- Normalización: los símbolos se escalan por \(1/\sqrt{10}\) para mantener potencia unitaria promedio
 
-    tabla_I = [-3 -3 -3 -3 -1 -1 -1 -1 1 1 1 1 3 3 3 3];
-    tabla_Q = [ 3  1 -1 -3  3  1 -1 -3 3 1 -1 -3 3 1 -1 -3];
+Cada símbolo complejo se construye como:
 
-Los símbolos complejos se generan como:
+s = (I + jQ) / sqrt(10)
 
-    simbolo = I + 1j*Q;
 
-De esta manera, cada grupo de 4 bits se representa como un punto en el plano complejo.
+Este proceso genera una constelación 16-QAM normalizada en el plano complejo.
 
----
+#### *Padding adicional*
 
-### *4. Generación de símbolos complejos*
-
-Para cada grupo de bits, se obtiene el símbolo correspondiente mediante:
-
-    simbolos(k) = tabla_I(sym_idx) + 1j*tabla_Q(sym_idx);
-
-El resultado es una secuencia de símbolos complejos que representan la señal modulada en banda base.
+Al final de la secuencia de símbolos se agregan muestras nulas (padding). Esto se realiza para evitar efectos transitorios en el filtrado posterior y garantizar una correcta salida del sistema.
 
 ---
 
-### *5. Normalización de potencia*
+### *2. Filtro Root Raised Cosine (RRC)*
 
-Finalmente, los símbolos generados se normalizan dividiendo por `sqrt(10)`:
+Una vez obtenidos los símbolos modulados, se aplica un filtro de conformación de pulso tipo Root Raised Cosine (RRC). Este filtro tiene como objetivo limitar el ancho de banda de la señal y reducir la interferencia entre símbolos (ISI, *Inter-Symbol Interference*).
 
-    simbolos = simbolos / sqrt(10);
+#### *Parámetros del filtro*
 
-Esta normalización garantiza que la potencia promedio de la señal sea unitaria, lo cual es fundamental para análisis posteriores como la estimación de BER y la comparación de desempeño en distintos esquemas de modulación.
+El filtro se define mediante los siguientes parámetros:
+
+- Factor de roll-off: `alpha = 0.35`
+- Span: `span = 10` (duración del filtro en símbolos)
+- Samples per symbol: `sps = 2`
+
+El número total de coeficientes del filtro es:
+
+N = span * sps + 1
 
 
 ---
 
-### *Descripción conceptual*
+#### *Generación de la respuesta al impulso*
 
-El modulador 16-QAM toma grupos de 4 bits y los convierte en símbolos complejos ubicados en una constelación bidimensional. Cada símbolo contiene simultáneamente una componente en fase (I) y una componente en cuadratura (Q). Gracias al uso de codificación Gray y normalización de potencia, el sistema logra un equilibrio entre eficiencia espectral y robustez frente al ruido.
+La respuesta al impulso del filtro se calcula a partir de la expresión analítica del filtro RRC, considerando tres casos:
 
+1. En el origen (\(t = 0\))
+2. En puntos singulares (\(t = \pm 1/(4\alpha)\))
+3. En el resto de valores
+
+Cada coeficiente se obtiene evaluando la función en el dominio del tiempo, y posteriormente el filtro se normaliza para tener energía unitaria.
+
+---
+
+#### *Upsampling*
+
+Antes del filtrado, la señal se sobremuestrea insertando ceros entre símbolos:
+
+sim_up(1:sps:end) = simbolos
+
+
+Esto genera una señal discreta con mayor resolución temporal, necesaria para aplicar el filtrado de conformación.
+
+---
+
+#### *Filtrado*
+
+La señal sobremuestreada se filtra mediante una operación de convolución discreta:
+
+se_al_tx = filter(h, 1, sim_up)
+
+
+El filtro se implementa con estado persistente para mantener continuidad entre bloques de datos, evitando discontinuidades en la señal de salida.
+
+---
+
+### *Función del filtro RRC en el sistema*
+
+El filtro RRC cumple un rol fundamental en el sistema de comunicaciones:
+
+- Limita el ancho de banda de la señal transmitida
+- Reduce la interferencia entre símbolos
+- Permite reconstrucción óptima en el receptor (cuando se usa un filtro RRC complementario)
+
+En conjunto con un filtro RRC en el receptor, se obtiene una respuesta tipo Raised Cosine, cumpliendo la condición de cero interferencia intersimbólica en el instante de muestreo.
+
+---
+
+### *Resumen del bloque*
+
+El procesamiento de modulación y filtrado sigue el siguiente flujo:
+
+1. Agrupación de bits en bloques de 4  
+2. Mapeo Gray a símbolos complejos 16-QAM  
+3. Normalización de la constelación  
+4. Inserción de padding  
+5. Upsampling de la señal  
+6. Filtrado mediante Root Raised Cosine  
+
+Este bloque transforma la información digital en una señal lista para transmisión, optimizada tanto en eficiencia espectral como en robustez frente a interferencias.
