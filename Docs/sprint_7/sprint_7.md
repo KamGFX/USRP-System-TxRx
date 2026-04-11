@@ -59,3 +59,7 @@ El procesamiento completo del bloque FEC sigue el siguiente orden:
 4. Codificación convolucional (corrección de errores)  
 
 Este esquema permite detectar errores residuales mediante el CRC y corregir errores introducidos por el canal gracias a la redundancia del codificador convolucional, mejorada por el efecto del interleaver.
+
+<p align="center">
+  <img src="../images/lab2.drawio.png" width="400">
+</p>
