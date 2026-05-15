@@ -1,4 +1,4 @@
-# Canal Multitrayecto en Simulink/MATLAB
+# Canal Multitrayecto
 
 El bloque `canal_multitrayecto` implementa un modelo básico de canal multitrayecto utilizado en sistemas de comunicaciones digitales. Este modelo representa la propagación de una señal a través de dos trayectorias:
 
