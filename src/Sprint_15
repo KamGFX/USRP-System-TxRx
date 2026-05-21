@@ -1,1 +1,15 @@
+EbN0_dB = 0:2:20;
+BER = zeros(size(EbN0_dB));
 
+for k = 1:length(EbN0_dB)
+
+    EbN0 = EbN0_dB(k);
+
+    sim('Proyecto_labII_V1');
+
+    BER(k) = ber_out(1);
+
+    disp(['Eb/N0 = ', num2str(EbN0), ...
+          ' dB  --> BER = ', num2str(BER(k))]);
+
+end
