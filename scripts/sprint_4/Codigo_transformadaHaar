@@ -1,0 +1,38 @@
+function img_comp = fcn(img)
+
+img = double(img);
+
+[m,n,channels] = size(img);
+
+m2 = floor(m/2)*2;
+n2 = floor(n/2)*2;
+
+img = img(1:m2,1:n2,:);
+
+img_comp = zeros(m2,n2,channels);
+
+T = 15;
+
+for c = 1:channels
+    
+    I = img(:,:,c);
+
+    L = (I(:,1:2:n2) + I(:,2:2:n2))/2;
+    H = (I(:,1:2:n2) - I(:,2:2:n2))/2;
+
+    LL = (L(1:2:m2,:) + L(2:2:m2,:))/2;
+    LH = (L(1:2:m2,:) - L(2:2:m2,:))/2;
+    HL = (H(1:2:m2,:) + H(2:2:m2,:))/2;
+    HH = (H(1:2:m2,:) - H(2:2:m2,:))/2;
+
+    LH(abs(LH) < T) = 0;
+    HL(abs(HL) < T) = 0;
+    HH(abs(HH) < T) = 0;
+
+    % organizar subbandas como en la teoria Haar
+
+    img_comp(:,:,c) = [LL HL; LH HH];
+
+end
+
+end

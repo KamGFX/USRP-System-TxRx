@@ -1,0 +1,52 @@
+%% 1. Cargar imagen
+img = imread('Mi_valen.jpeg');
+
+%% 2. Procesamiento de imagen a color
+img_d = double(img);
+% Saturación
+img_d(img_d > 255) = 255;
+img_proc = uint8(img_d);
+
+%% 3. Empaquetar para From Workspace (Simulink)
+img_ws.time = 0;
+img_ws.signals.values = img_proc;
+img_ws.signals.dimensions = size(img_proc);
+
+%% 4. Visualización imagen original procesada
+figure
+imshow(img_proc)
+title('Imagen procesada enviada a Simulink')
+
+%% 5. Extraer y visualizar salida de Simulink
+img_sim = out.img_out_ws.Data;
+whos img_sim
+
+% --- CORRECCIÓN: img_sim puede tener múltiples frames (3D o 4D) ---
+% Verificar dimensiones
+dims = size(img_sim);
+disp(['Dimensiones de img_sim: ' mat2str(dims)]);
+
+if ndims(img_sim) == 3 && dims(3) == 3
+    % Caso ideal: una sola imagen RGB (Alto x Ancho x 3)
+    img_final = img_sim;
+
+elseif ndims(img_sim) == 3 && dims(3) > 3
+    % Simulink apilió frames en la 3ra dimensión → tomar último frame RGB
+    % Cada frame RGB ocupa 3 canales, el último frame está al final
+    img_final = img_sim(:, :, end-2:end);
+    disp('Múltiples frames detectados: se extrae el último frame RGB')
+
+elseif ndims(img_sim) == 4
+    % Formato (Alto x Ancho x 3 x NumFrames) → tomar último frame
+    img_final = img_sim(:, :, :, end);
+    disp('Formato 4D detectado: se extrae el último frame')
+end
+
+%% 6. Mostrar imagen resultante de Simulink
+figure
+imshow(img_final)
+title('Imagen de salida desde Simulink')
+
+%% 7. Guardar imagen (reemplaza el print incorrecto)
+imwrite(img_final, 'img_salida_simulink.png')
+disp('Imagen guardada como img_salida_simulink.png')
